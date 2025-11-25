@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Азбука Морзе - 5 букв в ряд</title>
+<style>
+  /* Общий стиль страницы */
+  body {
+    font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #37353E; /* темный фон */
+    margin: 0;
+    padding: 20px;
+    color: #FFFFFF;
+  }
+
+  /* Заголовки */
+  h2 {
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  /* Описание или параграфы */
+  p {
+    max-width: 700px;
+    margin: 0 auto 12px auto;
+    font-size: 16px;
+    text-align: center;
+    color: #FFFFFF;
+  }
+
+  /* Блок с задачей */
+  #task {
+    max-width: 700px;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background-color: #4A4A6A; /* чуть светлее для контраста */
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #FFFFFF;
+  }
+
+  #task p {
+    margin: 0;
+  }
+
+  /* Поле ввода */
+  input[type="text"] {
+    width: calc(100% - 160px);
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #777;
+    background-color: #555; /* для видимости на темном фоне */
+    color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  input[type="text"]:focus {
+    border-color: #2980b9;
+    box-shadow: inset 0 2px 8px rgba(41, 128, 185, 0.3);
+    outline: none;
+  }
+
+  /* Кнопки - темно-фиолетовые */
+  button {
+    padding: 14px 24px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #4B0082; /* темно-фиолетовый */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+
+  button:hover {
+    background-color: #6A0DAD; /* чуть светлее при наведении */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  }
+
+  /* Блок результата */
+  #result {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #4A4A6A;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    font-size: 19px;
+    text-align: center;
+    min-height: 50px;
+    color: #FFFFFF;
+  }
+
+  /* Таблица с буквами */
+  table {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: #555;
+    color: #fff;
+  }
+
+  th, td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #777;
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+  }
+
+  th {
+    background-color: #2980b9;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #444;
+  }
+
+  h3 {
+    text-align: center;
+    color: #fff;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Отгадать 5 букв морзе подряд</h2>
+<p>Введите 5 русских букв подряд, разделённых пробелами. Например: <em>А В Г Д Е</em></p>
+
+<div id="task"></div>
+
+<div style="max-width:700px; margin: 0 auto; display:flex; align-items:center; justify-content:center;">
+  <input type="text" id="userAnswer" placeholder="Введите 5 букв через пробел" />
+  <button id="checkBtn" onclick="checkAnswer()">Проверить</button>
+</div>
+
+<div id="result"></div>
+
+<div style="text-align:center; margin-top:20px;">
+  <button onclick="generateSequence()">Следующая последовательность</button>
+</div>
+
+<h3>Полный алфавит Морзе для русского языка:</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Буква</th>
+      <th>Морзе</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>А</td><td>·–</td></tr>
+    <tr><td>Б</td><td>––•••</td></tr>
+    <tr><td>В</td><td>·––</td></tr>
+    <tr><td>Г</td><td>–––·</td></tr>
+    <tr><td>Д</td><td>–··</td></tr>
+    <tr><td>Е</td><td>·</td></tr>
+    <tr><td>Ж</td><td>•••–</td></tr>
+    <tr><td>З</td><td>––••</td></tr>
+    <tr><td>И</td><td>••</td></tr>
+    <tr><td>Й</td><td>·–––</td></tr>
+    <tr><td>К</td><td>–·–</td></tr>
+    <tr><td>Л</td><td>·–••</td></tr>
+    <tr><td>М</td><td>––</td></tr>
+    <tr><td>Н</td><td>–·</td></tr>
+    <tr><td>О</td><td>–––</td></tr>
+    <tr><td>П</td><td>·––·</td></tr>
+    <tr><td>Р</td><td>·–·</td></tr>
+    <tr><td>С</td><td>•••</td></tr>
+    <tr><td>Т</td><td>–</td></tr>
+    <tr><td>У</td><td>··–</td></tr>
+    <tr><td>Ф</td><td>··–·</td></tr>
+    <tr><td>Х</td><td>••••</td></tr>
+    <tr><td>Ц</td><td>–·–·</td></tr>
+    <tr><td>Ч</td><td>–––·</td></tr>
+    <tr><td>Ш</td><td>––––</td></tr>
+    <tr><td>Щ</td><td>–––·–</td></tr>
+    <tr><td>Ъ</td><td>–––·–</td></tr>
+    <tr><td>Ы</td><td>–·––</td></tr>
+    <tr><td>Ь</td><td>–··–</td></tr>
+    <tr><td>Э</td><td>··–··</td></tr>
+    <tr><td>Ю</td><td>··––</td></tr>
+    <tr><td>Я</td><td>·–·–</td></tr>
+  </tbody>
+</table>
+
+<script>
+// Полный алфавит Морзе для русского языка
+const morseAlphabet = {
+  'А': '·–',
+  'Б': '––•••',
+  'В': '·––',
+  'Г': '–––·',
+  'Д': '–··',
+  'Е': '·',
+  'Ж': '•••–',
+  'З': '––••',
+  'И': '••',
+  'Й': '·–––',
+  'К': '–·–',
+  'Л': '·–••',
+  'М': '––',
+  'Н': '–·',
+  'О': '–––',
+  'П': '·––·',
+  'Р': '·–·',
+  'С': '•••',
+  'Т': '–',
+  'У': '··–',
+  'Ф': '··–·',
+  'Х': '••••',
+  'Ц': '–·–·',
+  'Ч': '–––·',
+  'Ш': '––––',
+  'Щ': '–––·–',
+  'Ъ': '–––·–',
+  'Ы': '–·––',
+  'Ь': '–··–',
+  'Э': '··–··',
+  'Ю': '··––',
+  'Я': '·–·–'
+};
+
+const alphabetEntries = Object.entries(morseAlphabet);
+let sequenceCodes = [];
+let answerLetters = [];
+
+//-Функция для генерации новой последовательности
+function generateSequence() {
+  sequenceCodes = [];
+  answerLetters = [];
+  for (let i=0; i<5; i++) {
+    const randIndex = Math.floor(Math.random() * alphabetEntries.length);
+    const [letter, code] = alphabetEntries[randIndex];
+    sequenceCodes.push(code);
+    answerLetters.push(letter);
+  }
+  document.getElementById('task').innerHTML = '<p><strong>Морзе коды:</strong> ' + sequenceCodes.join(' ') + '</p>';
+  document.getElementById('userAnswer').value = '';
+  document.getElementById('result').innerText = '';
+  document.getElementById('checkBtn').disabled = false; // разблокировать кнопку
+}
+
+//-Функция для проверки ответа
+function checkAnswer() {
+  const userInput = document.getElementById('userAnswer').value.trim().toUpperCase();
+  const userLetters = userInput.split(/\s+/);
+  
+  if (userLetters.length !== 5) {
+    document.getElementById('result').innerText = 'Пожалуйста, введите ровно 5 букв, разделённых пробелами.';
+    return;
+  }
+  
+  let correctCount = 0;
+  for (let i=0; i<5; i++) {
+    if (userLetters[i] === answerLetters[i]) {
+      correctCount++;
+    }
+  }
+
+  if (correctCount === 5) {
+    document.getElementById('result').innerText = 'Поздравляем!';
+    alert('POMNI');
+    // оставить кнопку активной или по желанию
+  } else {
+    document.getElementById('result').innerText = `Вы угадали ${correctCount} из 5. Правильные буквы: ${answerLetters.join(' ')}`;
+    document.getElementById('checkBtn').disabled = true; // блокируем кнопку
+  }
+}
+
+window.onload = () => {
+  generateSequence();
+};
+</script>
+
+</body>
+</html>

@@ -1,293 +1,519 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<title>Азбука Морзе - 5 букв в ряд</title>
-<style>
-  /* Общий стиль страницы */
-  body {
-    font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #37353E; /* темный фон */
-    margin: 0;
-    padding: 20px;
-    color: #FFFFFF;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@tandydop — Profile</title>
+  <style>
+    :root{
+      --bg:#070710;
+      --panel:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.12);
+      --text:#f6f7fb;
+      --muted:#b8bfd0;
+      --pink:#ff4d8d;
+      --purple:#7c5cff;
+      --cyan:#35d0ba;
+      --shadow:0 22px 70px rgba(0,0,0,.45);
+      --radius:28px;
+    }
 
-  /* Заголовки */
-  h2 {
-    color: #FFFFFF;
-    text-align: center;
-    margin-bottom: 12px;
-  }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,77,141,.20), transparent 28%),
+        radial-gradient(circle at top right, rgba(124,92,255,.20), transparent 24%),
+        radial-gradient(circle at bottom, rgba(53,208,186,.10), transparent 30%),
+        linear-gradient(135deg,#050508 0%, #0b0d1a 55%, #070710 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-  /* Описание или параграфы */
-  p {
-    max-width: 700px;
-    margin: 0 auto 12px auto;
-    font-size: 16px;
-    text-align: center;
-    color: #FFFFFF;
-  }
+    .container{width:min(1180px,92vw); margin:0 auto}
+    .hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      padding:32px 0 70px;
+      isolation:isolate;
+    }
 
-  /* Блок с задачей */
-  #task {
-    max-width: 700px;
-    margin: 0 auto 20px auto;
-    padding: 20px;
-    background-color: #4A4A6A; /* чуть светлее для контраста */
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    font-size: 18px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    color: #FFFFFF;
-  }
+    .orb{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(18px);
+      opacity:.9;
+      z-index:-1;
+      animation:float 10s ease-in-out infinite;
+    }
+    .orb1{width:260px;height:260px;left:-60px;top:110px;background:rgba(255,77,141,.18)}
+    .orb2{width:330px;height:330px;right:-120px;top:60px;background:rgba(124,92,255,.18);animation-delay:1.5s}
+    .orb3{width:220px;height:220px;right:14%;bottom:2%;background:rgba(53,208,186,.12);animation-delay:2.4s}
 
-  #task p {
-    margin: 0;
-  }
+    @keyframes float{
+      0%,100%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-18px) scale(1.04)}
+    }
 
-  /* Поле ввода */
-  input[type="text"] {
-    width: calc(100% - 160px);
-    padding: 14px 20px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: 1px solid #777;
-    background-color: #555; /* для видимости на темном фоне */
-    color: #fff;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:32px;
+      align-items:center;
+      width:100%;
+    }
 
-  input[type="text"]:focus {
-    border-color: #2980b9;
-    box-shadow: inset 0 2px 8px rgba(41, 128, 185, 0.3);
-    outline: none;
-  }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      border-radius:999px;
+      backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+      animation:fadeUp .8s ease both;
+    }
+    .pulse{
+      width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(135deg,var(--pink),var(--purple));
+      box-shadow:0 0 18px rgba(255,77,141,.7);
+    }
 
-  /* Кнопки - темно-фиолетовые */
-  button {
-    padding: 14px 24px;
-    margin-left: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: #4B0082; /* темно-фиолетовый */
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
+    h1{
+      font-size:clamp(2.7rem, 6vw, 5.7rem);
+      line-height:.95;
+      margin:0 0 18px;
+      letter-spacing:-.05em;
+      animation:fadeUp .9s ease both .08s;
+    }
+    .gradient{
+      background:linear-gradient(90deg,#fff 0%, #ffd2e4 30%, #ff4d8d 68%, #7c5cff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
 
-  button:hover {
-    background-color: #6A0DAD; /* чуть светлее при наведении */
-    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-  }
+    .subtitle{
+      font-size:1.05rem;
+      line-height:1.75;
+      color:var(--muted);
+      max-width:660px;
+      margin:0 0 28px;
+      animation:fadeUp .9s ease both .16s;
+    }
 
-  /* Блок результата */
-  #result {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #4A4A6A;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    font-size: 19px;
-    text-align: center;
-    min-height: 50px;
-    color: #FFFFFF;
-  }
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      animation:fadeUp .9s ease both .22s;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 20px;
+      border-radius:18px;
+      text-decoration:none;
+      color:#fff;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(14px);
+      transition:.25s ease;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+    .btn:hover{transform:translateY(-3px) scale(1.01); border-color:rgba(255,255,255,.25)}
+    .btn.primary{
+      background:linear-gradient(135deg,var(--pink),var(--purple));
+      border-color:transparent;
+    }
 
-  /* Таблица с буквами */
-  table {
-    width: 100%;
-    max-width: 900px;
-    margin: 20px auto;
-    border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    background-color: #555;
-    color: #fff;
-  }
+    .profile-card{
+      position:relative;
+      padding:22px;
+      border-radius:var(--radius);
+      background:var(--panel);
+      border:1px solid var(--stroke);
+      backdrop-filter:blur(18px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      animation:fadeUp 1s ease both .1s;
+    }
 
-  th, td {
-    padding: 14px;
-    text-align: center;
-    border-bottom: 1px solid #777;
-    font-family: 'Arial', sans-serif;
-    font-size: 15px;
-  }
+    .cover{
+      height:320px;
+      border-radius:22px;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55)),
+        url('rose.jpg') center top/cover no-repeat;
+    }
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, transparent 0%, rgba(7,7,16,.72) 100%);
+    }
 
-  th {
-    background-color: #2980b9;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-  }
+    .avatar{
+      width:130px;
+      height:130px;
+      border-radius:32px;
+      position:absolute;
+      left:24px;
+      top:18px;
+      border:4px solid rgba(255,255,255,.18);
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
+      background:
+        url('ava.jpg') center/contain no-repeat;
+      background-color: rgba(255,255,255,.06);
+      z-index:2;
+      overflow:hidden;
+    }
 
-  tbody tr:nth-child(even) {
-    background-color: #444;
-  }
+    .profile-meta{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .meta h3{margin:0 0 6px;font-size:1.18rem}
+    .meta p{margin:0;color:var(--muted)}
 
-  h3 {
-    text-align: center;
-    color: #fff;
-    margin-top: 40px;
-  }
-</style>
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    .stat{
+      padding:16px 14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      text-align:center;
+    }
+    .stat b{
+      display:block;
+      font-size:1.2rem;
+      margin-bottom:4px;
+    }
+    .stat span{color:var(--muted);font-size:.9rem}
+
+    section{padding:28px 0 84px}
+    .section-title{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:20px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:clamp(1.6rem, 3vw, 2.35rem);
+      letter-spacing:-.03em;
+    }
+    .section-title p{margin:0;color:var(--muted);max-width:640px}
+
+    .about{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+    .info,.note,.video-card,.character-card{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      border-radius:24px;
+      backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);
+    }
+    .info{padding:22px}
+    .info ul{margin:0;padding:0;list-style:none}
+    .info li{
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+    }
+    .info li:last-child{border-bottom:none}
+    .info strong{color:#fff}
+    .note{
+      padding:22px;
+      background:
+        linear-gradient(135deg, rgba(255,77,141,.12), rgba(124,92,255,.12)),
+        rgba(255,255,255,.06);
+    }
+    .note p{margin:0 0 12px;color:var(--muted);line-height:1.7}
+    .warn{
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-size:.92rem;
+    }
+
+    .videos{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:16px;
+    }
+    .video-card{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      overflow:hidden;
+      transition:.28s ease;
+    }
+    .video-card:hover{transform:translateY(-6px) scale(1.01); border-color:rgba(255,255,255,.24)}
+    .thumb{
+      height:210px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.68)),
+        url('rose.jpg') center/cover no-repeat;
+      position:relative;
+    }
+    .rank{
+      position:absolute;
+      left:14px;
+      top:14px;
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,var(--pink),var(--purple));
+      font-weight:800;
+      box-shadow:0 12px 28px rgba(255,77,141,.35);
+    }
+    .video-body{padding:16px}
+    .video-body h3{
+      margin:0 0 10px;
+      font-size:1rem;
+      line-height:1.4;
+    }
+    .video-body p{
+      margin:0;
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.55;
+    }
+
+    .characters-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(115px, 115px));
+      gap:16px;
+      justify-content:start;
+    }
+    .character-card{
+      width:115px;
+      height:272px;
+      overflow:hidden;
+      transition:.25s ease;
+      border-radius:24px;
+    }
+    .character-card:hover{transform:translateY(-5px)}
+    .character-card img{
+      width:115px;
+      height:200px;
+      object-fit:cover;
+      display:block;
+    }
+    .character-card .body{padding:10px 8px}
+    .character-card h3{margin:0 0 4px;font-size:.92rem;line-height:1.1}
+    .character-card p{margin:0;color:var(--muted);font-size:.8rem}
+
+    .floating{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      border:none;
+      background:linear-gradient(135deg,var(--pink),var(--purple));
+      color:#fff;
+      font-size:1.4rem;
+      box-shadow:var(--shadow);
+      cursor:pointer;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(24px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    @media (max-width:1080px){
+      .hero-grid,.about{grid-template-columns:1fr}
+      .videos{grid-template-columns:repeat(2,1fr)}
+      .stats{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      .videos{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+      .cover{height:260px}
+      .avatar{width:96px;height:96px;border-radius:26px;top:14px;left:14px}
+      .profile-meta{margin-top:18px}
+      .section-title{flex-direction:column;align-items:flex-start}
+    }
+  </style>
 </head>
 <body>
+  <div class="hero">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
-<h2>Отгадать 5 букв морзе подряд</h2>
-<p>Введите 5 русских букв подряд, разделённых пробелами. Например: <em>А В Г Д Е</em></p>
+    <div class="container hero-grid">
+      <div>
+        <div class="badge"><span class="pulse"></span>BY TELDIK</div>
+        <h1><span class="gradient">@tandydop</span></h1>
+        <p class="subtitle">
+          Сайт был создан программистом TELDIK на языке программирования html
+		  В честь день рождения данного пользователя!
+        </p>
+        <div class="buttons">
+          <a class="btn primary" href="#videos">Смотреть видео</a>
+          <a class="btn" href="#characters">Персонажи</a>
+          <a class="btn" href="#about">О профиле</a>
+        </div>
+      </div>
 
-<div id="task"></div>
+      <div class="profile-card">
+        <div class="cover">
+          <div class="avatar"></div>
+        </div>
+        <div class="profile-meta">
+          <div class="meta">
+            <h3>Твой психолог❤️‍</h3>
+            <p>@tandydop</p>
+          </div>
+          <div class="meta" style="text-align:right">
+            <h3>Telegram</h3>
+            <p>@inqoosha</p>
+          </div>
+        </div>
 
-<div style="max-width:700px; margin: 0 auto; display:flex; align-items:center; justify-content:center;">
-  <input type="text" id="userAnswer" placeholder="Введите 5 букв через пробел" />
-  <button id="checkBtn" onclick="checkAnswer()">Проверить</button>
-</div>
+        <div class="stats">
+          <div class="stat"><b>6.1M</b><span>лайков</span></div>
+          <div class="stat"><b>161.6K</b><span>подписчиков</span></div>
+          <div class="stat"><b>5</b><span>топ видео</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div id="result"></div>
+  <section id="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>О профиле</h2>
+        <p> </p>
+      </div>
 
-<div style="text-align:center; margin-top:20px;">
-  <button onclick="generateSequence()">Следующая последовательность</button>
-</div>
+      <div class="about">
+        <div class="info">
+          <ul>
+            <li><strong>Аккаунт:</strong> @tandydop</li>
+            <li><strong>Имя профиля:</strong> Твой психолог❤️‍</li>
+            <li><strong>Подписчики:</strong> 161.6K</li>
+            <li><strong>Лайки:</strong> 6.1M</li>
+            <li><strong>Видео вышло:</strong>У меня нету аналитики, чел</li>
+          </ul>
+        </div>
+        <div class="note">
+          <p></p>
+          <div class="warn">Важно: «Я НЕ ПСИХОЛОГ!»</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h3>Полный алфавит Морзе для русского языка:</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Буква</th>
-      <th>Морзе</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>А</td><td>·–</td></tr>
-    <tr><td>Б</td><td>––•••</td></tr>
-    <tr><td>В</td><td>·––</td></tr>
-    <tr><td>Г</td><td>–––·</td></tr>
-    <tr><td>Д</td><td>–··</td></tr>
-    <tr><td>Е</td><td>·</td></tr>
-    <tr><td>Ж</td><td>•••–</td></tr>
-    <tr><td>З</td><td>––••</td></tr>
-    <tr><td>И</td><td>••</td></tr>
-    <tr><td>Й</td><td>·–––</td></tr>
-    <tr><td>К</td><td>–·–</td></tr>
-    <tr><td>Л</td><td>·–••</td></tr>
-    <tr><td>М</td><td>––</td></tr>
-    <tr><td>Н</td><td>–·</td></tr>
-    <tr><td>О</td><td>–––</td></tr>
-    <tr><td>П</td><td>·––·</td></tr>
-    <tr><td>Р</td><td>·–·</td></tr>
-    <tr><td>С</td><td>•••</td></tr>
-    <tr><td>Т</td><td>–</td></tr>
-    <tr><td>У</td><td>··–</td></tr>
-    <tr><td>Ф</td><td>··–·</td></tr>
-    <tr><td>Х</td><td>••••</td></tr>
-    <tr><td>Ц</td><td>–·–·</td></tr>
-    <tr><td>Ч</td><td>–––·</td></tr>
-    <tr><td>Ш</td><td>––––</td></tr>
-    <tr><td>Щ</td><td>–––·–</td></tr>
-    <tr><td>Ъ</td><td>–––·–</td></tr>
-    <tr><td>Ы</td><td>–·––</td></tr>
-    <tr><td>Ь</td><td>–··–</td></tr>
-    <tr><td>Э</td><td>··–··</td></tr>
-    <tr><td>Ю</td><td>··––</td></tr>
-    <tr><td>Я</td><td>·–·–</td></tr>
-  </tbody>
-</table>
+  <section id="videos">
+    <div class="container">
+      <div class="section-title">
+        <h2>Топ 5 популярных видео</h2>
+        <p> </p>
+      </div>
 
-<script>
-// Полный алфавит Морзе для русского языка
-const morseAlphabet = {
-  'А': '·–',
-  'Б': '––•••',
-  'В': '·––',
-  'Г': '–––·',
-  'Д': '–··',
-  'Е': '·',
-  'Ж': '•••–',
-  'З': '––••',
-  'И': '••',
-  'Й': '·–––',
-  'К': '–·–',
-  'Л': '·–••',
-  'М': '––',
-  'Н': '–·',
-  'О': '–––',
-  'П': '·––·',
-  'Р': '·–·',
-  'С': '•••',
-  'Т': '–',
-  'У': '··–',
-  'Ф': '··–·',
-  'Х': '••••',
-  'Ц': '–·–·',
-  'Ч': '–––·',
-  'Ш': '––––',
-  'Щ': '–––·–',
-  'Ъ': '–––·–',
-  'Ы': '–·––',
-  'Ь': '–··–',
-  'Э': '··–··',
-  'Ю': '··––',
-  'Я': '·–·–'
-};
+      <div class="videos">
+        <a class="video-card" href="https://www.youtube.com/watch?v=0j3XH-nwNV8&list=RD0j3XH-nwNV8&start_radio=1" target="_blank" rel="noopener">
+          <div class="thumb"><div class="rank">1</div></div>
+          <div class="video-body">
+            <h3>помогите #вреки #неблокируйтевидео #рофл #вреки</h3>
+            <p>Один из заметных роликов профиля.</p>
+          </div>
+        </a>
 
-const alphabetEntries = Object.entries(morseAlphabet);
-let sequenceCodes = [];
-let answerLetters = [];
+        <a class="video-card" href="https://www.youtube.com/watch?v=0j3XH-nwNV8&list=RD0j3XH-nwNV8&start_radio=1" target="_blank" rel="noopener">
+          <div class="thumb"><div class="rank">2</div></div>
+          <div class="video-body">
+            <h3>317 307 522 256 #fyp #школыспб #317школа</h3>
+            <p>Ролик с большим числом лайков.</p>
+          </div>
+        </a>
 
-//-Функция для генерации новой последовательности
-function generateSequence() {
-  sequenceCodes = [];
-  answerLetters = [];
-  for (let i=0; i<5; i++) {
-    const randIndex = Math.floor(Math.random() * alphabetEntries.length);
-    const [letter, code] = alphabetEntries[randIndex];
-    sequenceCodes.push(code);
-    answerLetters.push(letter);
-  }
-  document.getElementById('task').innerHTML = '<p><strong>Морзе коды:</strong> ' + sequenceCodes.join(' ') + '</p>';
-  document.getElementById('userAnswer').value = '';
-  document.getElementById('result').innerText = '';
-  document.getElementById('checkBtn').disabled = false; // разблокировать кнопку
-}
+        <a class="video-card" href="https://www.youtube.com/watch?v=0j3XH-nwNV8&list=RD0j3XH-nwNV8&start_radio=1" target="_blank" rel="noopener">
+          <div class="thumb"><div class="rank">3</div></div>
+          <div class="video-body">
+            <h3>Лучшие находки в рандонавтике</h3>
+            <p>Видео с обзором и советами.</p>
+          </div>
+        </a>
 
-//-Функция для проверки ответа
-function checkAnswer() {
-  const userInput = document.getElementById('userAnswer').value.trim().toUpperCase();
-  const userLetters = userInput.split(/\s+/);
-  
-  if (userLetters.length !== 5) {
-    document.getElementById('result').innerText = 'Пожалуйста, введите ровно 5 букв, разделённых пробелами.';
-    return;
-  }
-  
-  let correctCount = 0;
-  for (let i=0; i<5; i++) {
-    if (userLetters[i] === answerLetters[i]) {
-      correctCount++;
-    }
-  }
+        <a class="video-card" href="https://www.youtube.com/watch?v=0j3XH-nwNV8&list=RD0j3XH-nwNV8&start_radio=1" target="_blank" rel="noopener">
+          <div class="thumb"><div class="rank">4</div></div>
+          <div class="video-body">
+            <h3>Видео с оригинальным звуком</h3>
+            <p>Заметный ролик аккаунта.</p>
+          </div>
+        </a>
 
-  if (correctCount === 5) {
-    document.getElementById('result').innerText = 'Поздравляем!';
-    alert('POMNI');
-    // оставить кнопку активной или по желанию
-  } else {
-    document.getElementById('result').innerText = `Вы угадали ${correctCount} из 5. Правильные буквы: ${answerLetters.join(' ')}`;
-    document.getElementById('checkBtn').disabled = true; // блокируем кнопку
-  }
-}
+        <a class="video-card" href="https://www.youtube.com/watch?v=0j3XH-nwNV8&list=RD0j3XH-nwNV8&start_radio=1" target="_blank" rel="noopener">
+          <div class="thumb"><div class="rank">5</div></div>
+          <div class="video-body">
+            <h3>оруу че у меня с пробором я же расчёсывалась долго</h3>
+            <p>Ролик с заметными лайками.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-window.onload = () => {
-  generateSequence();
-};
-</script>
+  <section id="characters">
+    <div class="container">
+      <div class="section-title">
+        <h2>12 персонажей</h2>
+        <p> </p>
+      </div>
 
+      <div class="characters-grid">
+        <div class="character-card"><img src="radik.png" alt="Рэдик"><div class="body"><h3>Рэдик</h3><p>14 лет</p></div></div>
+        <div class="character-card"><img src="nastya.png" alt="Настя"><div class="body"><h3>Настя</h3><p>14 лет</p></div></div>
+        <div class="character-card"><img src="rosa.png" alt="Роза"><div class="body"><h3>Роза</h3><p>15 лет</p></div></div>
+        <div class="character-card"><img src="charlotte.png" alt="Шарлотта"><div class="body"><h3>Шарлотта</h3><p>14 лет</p></div></div>
+        <div class="character-card"><img src="zoya.png" alt="Зоя"><div class="body"><h3>Зоя</h3><p>14 лет</p></div></div>
+        <div class="character-card"><img src="adam.png" alt="Адам"><div class="body"><h3>Адам</h3><p>21 год</p></div></div>
+        <div class="character-card"><img src="lena.png" alt="Лена"><div class="body"><h3>Лена</h3><p>12 лет</p></div></div>
+        <div class="character-card"><img src="zhenya.png" alt="Женя"><div class="body"><h3>Женя</h3><p>15 лет</p></div></div>
+        <div class="character-card"><img src="misha.png" alt="Миша"><div class="body"><h3>Миша</h3><p>15 лет</p></div></div>
+        <div class="character-card"><img src="polina.png" alt="Полина"><div class="body"><h3>Полина</h3><p>15 лет</p></div></div>
+        <div class="character-card"><img src="rikki.png" alt="Рикки"><div class="body"><h3>Рикки</h3><p>13 лет</p></div></div>
+        <div class="character-card"><img src="flip.png" alt="Флип"><div class="body"><h3>Флип</h3><p>18 лет</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <button class="floating" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
 </body>
 </html>
